@@ -1,11 +1,7 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh  
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh  
+This project is built using **React**, **TypeScript**, **Vite**, and **Tailwind CSS**.  
+It provides a fast development setup with modern tools and clean UI components.
 
 ---
 
@@ -14,30 +10,50 @@ Currently, two official plugins are available:
 This project was created as a response to the **"Pimpeld fel a listát"** (Pimp the List) React challenge.  
 The goal was to take a raw user list and transform it into a beautiful, interactive, and performant user interface.
 
-### ✅ Features Implemented
+---
 
-- Clean, dark UI with green accents (Tailwind CSS)
-- Custom font and consistent spacing
-- Hover effect on user list items
+## ✅ Features Implemented
+
+### 💅 UI / UX
+
+- Clean, dark UI with green highlights (Tailwind CSS)
+- Custom Google Font (Fira Code)
+- Spacing and consistent layout
+- Hover effect on list items
+- Modal window for displaying detailed user information
+
+### 🔍 Functionality
+
 - Live search (by name, city, or occupation)
-- Sorting functionality (A–Z, Z–A)
-- Detailed user view on click
-- Pagination (showing 20 users per page)
-- Optimized performance with `useMemo`
-- Component-based structure
-- Scales to 3000+ items with smooth performance
+- Sorting (A–Z, Z–A) with toggle buttons
+- Pagination (20 users per page)
+- Smooth UI interaction without reloads
 
-### 📂 Project Structure
+### ⚡ Performance
 
-- `App.tsx`: main application logic (searching, sorting, pagination)
-- `UserList.tsx`: renders user items and handles selection
-- `Pagination.tsx`: displays dynamic page numbers and handles navigation
-- `types/User.ts`: defines the user data structure
+- `useMemo` optimizations for filtering, sorting, and slicing
+- Efficient rendering for large lists (tested with 3000+ users)
+- Component-based structure for better maintainability
 
-### ⚙️ How to Run Locally
+---
+
+## 🧱 Project Structure
+
+src/
+│
+├── App.tsx # Main logic (search, sort, pagination, modal)
+├── components/
+│ ├── UserList.tsx # List of users with selection
+│ ├── Pagination.tsx # Custom pagination component
+│ └── UserModal.tsx # Modal popup for detailed user view
+├── types/
+│ └── User.ts # User type definition
+└── index.css # Tailwind config & font imports
+
+## ⚙️ Getting Started Locally
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
+git clone git@github.com:Arnold19970330/react-user-list.git
 cd your-repo-name
 npm install
 npm run dev
