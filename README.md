@@ -53,7 +53,7 @@ src/
 ## ⚙️ Getting Started Locally
 
 ```bash
-git clone git@github.com:Arnold19970330/react-user-list.git
+git clone https://github.com/Arnold19970330/react-user-list.git
 cd your-repo-name
 npm install
 npm run dev
