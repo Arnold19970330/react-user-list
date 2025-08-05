@@ -2,6 +2,7 @@ import UserList from "./components/UserList";
 import type { User } from "./types/UserType";
 import { useMemo, useState } from "react";
 import Pagination from "./components/Pagination";
+import UserModal from "./components/UserModal";
 
 const baseUsers: User[] = [
   {
@@ -200,24 +201,10 @@ function App() {
           </div>
         </div>
         {selectedUser && (
-          <div className="my-8 p-6 rounded-lg bg-zinc-900 text-green-200 border border-green-600">
-            <h2 className="text-2xl font-bold text-green-400 mb-2">
-              Részletes adatok
-            </h2>
-            <p>
-              <span className="font-semibold">Név:</span> {selectedUser.name}
-            </p>
-            <p>
-              <span className="font-semibold">Kor:</span> {selectedUser.age}
-            </p>
-            <p>
-              <span className="font-semibold">Város:</span> {selectedUser.city}
-            </p>
-            <p>
-              <span className="font-semibold">Foglalkozás:</span>{" "}
-              {selectedUser.occupation}
-            </p>
-          </div>
+          <UserModal
+            user={selectedUser}
+            onClose={() => setSelectedUser(null)}
+          />
         )}
         <UserList users={paginatedUsers} onSelect={setSelectedUser} />
         <Pagination
