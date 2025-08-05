@@ -3,6 +3,7 @@ import type { User } from "./types/UserType";
 import { useMemo, useState } from "react";
 import Pagination from "./components/Pagination";
 import UserModal from "./components/UserModal";
+import AddUserModal from "./components/AddUserModal";
 
 const baseUsers: User[] = [
   {
@@ -112,19 +113,22 @@ const baseUsers: User[] = [
   },
 ];
 
-const userList: User[] = Array.from({ length: 3000 }, (_, i) => {
-  const base = baseUsers[i % baseUsers.length];
-  return {
-    ...base,
-    id: i + 1,
-    name: `${base.name} ${i + 1}`, // hogy ne legyen teljesen egyforma
-  };
-});
-
 function App() {
+  const [users, setUsers] = useState<User[]>(() =>
+    Array.from({ length: 50 }, (_, i) => {
+      const base = baseUsers[i % baseUsers.length];
+      return {
+        ...base,
+        id: i + 1,
+        name: `${base.name} ${i + 1}`,
+      };
+    })
+  );
   const [searchTerm, setSearchTerm] = useState("");
   type SortOrder = "asc" | "desc";
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
+
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
@@ -133,12 +137,12 @@ function App() {
 
   // 1. Szűrés ugyebár név, város vagy foglakozás szerint.
   const filteredUsers = useMemo(() => {
-    return userList.filter((user) =>
+    return users.filter((user) =>
       `${user.name} ${user.city} ${user.occupation}`
         .toLowerCase()
         .includes(searchTerm.toLowerCase())
     );
-  }, [searchTerm]);
+  }, [searchTerm, users]);
 
   // 2. Rendezés név szerint
   const sortedUsers = useMemo(() => {
@@ -199,11 +203,36 @@ function App() {
               Z–A
             </button>
           </div>
+          <div>
+            <h2 className="text-xl font-extrabold mb-2 text-green-500">
+              Új felhasználó hozzáadása
+            </h2>
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="bg-green-700 text-white px-4 py-2 rounded mb-4 hover:bg-green-600"
+            >
+              Új felhasználó hozzáadása
+            </button>
+          </div>
         </div>
         {selectedUser && (
           <UserModal
             user={selectedUser}
             onClose={() => setSelectedUser(null)}
+            onSave={(updatedUser) => {
+              const updated = users.map((u) =>
+                u.id === updatedUser.id ? updatedUser : u
+              );
+              setUsers(updated);
+              setSelectedUser(null);
+            }}
+          />
+        )}
+        {showAddModal && (
+          <AddUserModal
+            onClose={() => setShowAddModal(false)}
+            onAdd={(newUser) => setUsers([...users, newUser])}
+            nextId={users.length + 1}
           />
         )}
         <UserList users={paginatedUsers} onSelect={setSelectedUser} />
